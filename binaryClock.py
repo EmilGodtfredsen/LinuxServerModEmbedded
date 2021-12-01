@@ -32,12 +32,18 @@ while True:
     t = datetime.datetime.now()
     time_now = t.strftime('%H%M%S')
     for event in hat.stick.get_events():
+        if event.direction == 'right' & event.action == 'pressed':
+                display_binary_horizontal(t.hour, 5, color)
+                display_binary_horizontal(t.minute, 6, color)
+                display_binary_horizontal(t.second, 7, color)
+        elif event.direction =='down' & event.action == 'pressed':
+                time_now = [int(i) for i in time_now]
+                time_now = [0, time_now[0]] if len(time_now) == 1 else time_now      
+                for i in range(6):
+                    display_binary_vertical(i, time_now[i], color)
+        elif event.direction == 'middle' & event.action == 'held':
+                False
         print(event.direction, event.action)
-    time_now = [int(i) for i in time_now]
-    time_now = [0, time_now[0]] if len(time_now) == 1 else time_now      
-    for i in range(6):
-        display_binary_vertical(i, time_now[i], color)
-    #display_binary_horizontal(t.hour, 5, hour_color)
-    #display_binary_horizontal(t.minute, 6, minute_color)
-    #display_binary_horizontal(t.second, 7, second_color)
+   
+
     time.sleep(0.0001)
