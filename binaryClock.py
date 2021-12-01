@@ -3,7 +3,8 @@
 from sense_hat import SenseHat
 
 import time, datetime
-from itertools import izip_longest as zip_longest
+from pytz import timezone
+from itertools import zip_longest
 
 hat = SenseHat()
 
@@ -13,6 +14,7 @@ second_color = (255, 0, 0)
 off = (0, 0, 0)
 
 hat.clear()
+england = timezone('Europe/Copenhagen')
 def main():
     return(vertical_strings(bcd(Now)))
 
@@ -120,7 +122,7 @@ def set_time():
 
 while True:
     t = datetime.datetime.now()
-    Now = datetime.now().strftime('%H%M%S')
+    Now = datetime.now(england).strftime('%H%M%S')
     Time = main()
     set_time()
     display_binary_horizontal(t.hour, 1, hour_color)
