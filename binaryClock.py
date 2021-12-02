@@ -2,15 +2,16 @@
 
 from sense_hat import SenseHat
 
-import time, datetime
-import pytz
+import time, datetime, argparse
+#import pytz
 import signal
 hat = SenseHat()
 vertical = True
-mili_clock = True
+mili_time = True
 should_exit = False
 color = (0, 230, 0)
-russia = pytz.timezone('Asia/Vladivostok')
+#russia = pytz.timezone('Asia/Vladivostok')
+#copenhagen = pytz.timezone('Europe/Copenhagen')
 off = (0, 0, 0)
 
 hat.clear()
@@ -31,7 +32,7 @@ def display_binary_vertical(x, value):
             hat.set_pixel(x, y, off)
 
 def set_orientation(event):
-    global vertical, mili_clock
+    global vertical, mili_time
     if event.direction == 'right':
         hat.clear()
         vertical = False
@@ -40,10 +41,10 @@ def set_orientation(event):
         vertical = True
     if event.direction == 'up':
         hat.clear()
-        mili_clock = False
+        mili_time = False
     else:
         hat.clear()
-        mili_clock = True
+        mili_time = True
 hat.stick.direction_any = set_orientation
 
 
@@ -57,10 +58,27 @@ signal.signal(signal.SIGINT, before_exit)
 signal.signal(signal.SIGTERM, before_exit)
 
 def main():
-    hat.show_message("Programmet starter", 0.01)  
+    hat.show_message("Programmet starter", 0.01) 
+    parser = argparse.ArgumentParser(description='Raspberry pi sensehat binary clock. ' +
+        'Capable of doing 6 (horizontal) or 3 (vertical) column binary coded decimal (BCD) w/ 12- and 24-hour support.')
+    parser.add_argument('-o', '--orientation', choices=['v', 'h'],
+        help='Start up the clock in [v]ertical or [h]orizontal mode. Default is horizontal')
+    parser.add_argument('-12', '--twelve-hour-format', action='store_true',
+        help='Use the 12 hour clock format instead of the default 24 hour one.')
+
+    args = parser.parse_args() 
+    global vertical, mili_time
+    if args.orientation == 'v':
+        vertical = True
+    elif args.orientation == 'h':
+        vertical = False
+    if args.twelve_hour_format:
+        mili_time = True
+    else:
+        mili_time = False
     while not should_exit:
-        t = datetime.datetime.now(russia)
-        if mili_clock:
+        t = datetime.datetime.now()
+        if mili_time:
             time_now = t.strftime('%H%M%S')
         else:
             time_now = t.strftime('%I%M%S')
