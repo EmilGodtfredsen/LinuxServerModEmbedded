@@ -49,7 +49,7 @@ hat.stick.direction_any = set_orientation
 
 
 def before_exit(Signum, frame):
-    hat.show_message("Programmet slutter", 0.15)
+    hat.show_message("Programmet slutter", 0.1)
     global should_exit
     should_exit = True
     
@@ -58,7 +58,7 @@ signal.signal(signal.SIGINT, before_exit)
 signal.signal(signal.SIGTERM, before_exit)
 
 def main():
-    hat.show_message("Programmet starter", 0.15) 
+    hat.show_message("Programmet starter", 0.1) 
     parser = argparse.ArgumentParser(description='Raspberry pi sensehat binary clock. ' +
         'Capable of doing 6 (horizontal) or 3 (vertical) column binary coded decimal (BCD) w/ 12- and 24-hour support.')
     parser.add_argument('-o', '--orientation', choices=['v', 'h'],
