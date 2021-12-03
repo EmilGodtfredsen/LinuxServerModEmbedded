@@ -1,5 +1,4 @@
 .PHONY: all run test docs install uninstall clean
-
 #NOTE: PROJECT_DIR doesn't work w/ spaces in the path and MAKEFILE_LIST is a GNU specific variable
 #PROJECT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 #

@@ -13,3 +13,11 @@ optional arguments:
 - To enable the service: systemctl disable binary_clock.service
 - To run the service: systemctl start binary_clock.service
 - To stop the service: systemctl stop binary_clock.service
+
+# Change orientation with sense hat joystick
+- Right for horizontal
+- Left for vertical
+
+# Change the clock hour format between 12-hour or 24-hour
+- Up for 12-hour format 
+- Down for 24-hour (military) format
